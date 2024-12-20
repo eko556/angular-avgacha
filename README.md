@@ -58,3 +58,44 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## directory structure
+/angular-avgacha
+├─ public
+├─ server
+├─ src
+│  ├─ app
+│  │  └─ common
+│  │     ├─ footer
+│  │     │  ├─ footer.component.html
+│  │     │  ├─ footer.component.ts
+│  │     │  ├─ footer.component.scss
+│  │     │  └─ footer.component.spec.ts
+│  │     ├─ gacha
+│  │     │  ├─ gacha.component.html
+│  │     │  ├─ gacha.component.ts
+│  │     │  ├─ gacha.component.scss
+│  │     │  └─ gacha.component.spec.ts
+│  │     ├─ header
+│  │     │  ├─ header.component.html
+│  │     │  ├─ header.component.ts
+│  │     │  ├─ header.component.scss
+│  │     │  └─ header.component.spec.ts
+│  │     ├─ app.component.html
+│  │     ├─ app.component.scss
+│  │     ├─ app.component.spec.ts
+│  │     ├─ app.component.ts
+│  │     ├─ app.config.ts
+│  │     └─ app.routes.ts
+│  ├─ index.html
+│  ├─ main.ts
+│  └─ styles.scss
+├─ .editorconfig
+├─ .gitignore
+├─ angular.json
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.app.json
+├─ tsconfig.json
+├─ tsconfig.spec.json
+└─ README.md
