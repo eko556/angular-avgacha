@@ -7,5 +7,4 @@ import { Component } from '@angular/core';
   styleUrl: './showcase.component.scss'
 })
 export class ShowcaseComponent {
-
 }
