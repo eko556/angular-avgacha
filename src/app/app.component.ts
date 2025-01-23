@@ -7,9 +7,15 @@ import { ShowcaseComponent } from './common/showcase/showcase.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, GachaComponent, ShowcaseComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent,
+    GachaComponent,
+    ShowcaseComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'angular-avgacha';
