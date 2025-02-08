@@ -1,0 +1,50 @@
+openapi: '3.0.3'
+info:
+  title: AVGacha API
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+paths:
+  /gacha:
+    get:
+      summary: ランダムな10件の商品を取得する
+      operationId: getRand10Items
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/gachaResult'
+components:
+  schemas:
+    gachaResult:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        reviewCount:
+          type: string
+        reviewAverage:
+          type: string
+        itemUrl:
+          type: string
+        imageUrl:
+          type: string
+        price:
+          type: integer
+          format: int64
+        onsaleDate:
+          type: string
+          format: date-time
+        genreId:
+          type: integer
+          format: int64
+        actressId:
+          type: integer
+          format: int64
