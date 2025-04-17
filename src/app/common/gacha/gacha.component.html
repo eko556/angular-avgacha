@@ -1,7 +1,36 @@
-<div class="container">
-  <div class="main">
-    <div class="container-fluid">
-      <h1>メインコンテンツ</h1>
+<div class="gacha-container">
+  <div class="gacha-main">
+    <div class="gacha-content">
+      <h1 class="gacha-title">AVガチャ</h1>
+      <div class="gacha-description">
+        <p>ランダムな作品が出現！お気に入りの一本に出会えるかも？</p>
+      </div>
+      <div class="gacha-machine">
+        <div class="gacha-display">
+          <div class="gacha-capsule">
+            <img src="gachaimage.png" alt="ガチャカプセル" class="capsule-image">
+          </div>
+        </div>
+        <button class="gacha-button">
+          <span class="button-text">回す</span>
+          <span class="button-price">100円</span>
+        </button>
+      </div>
+      <div class="gacha-result" *ngIf="false">
+        <div class="result-card">
+          <img class="result-image" src="" alt="作品画像">
+          <div class="result-info">
+            <h3 class="result-title">タイトル</h3>
+            <div class="result-details">
+              <span class="result-price">￥1,980</span>
+              <div class="result-rating">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-count">(120件)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

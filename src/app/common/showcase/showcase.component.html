@@ -22,12 +22,44 @@
   </div>
 </div> -->
 
-<div class="keen-slider" #sliderRef>
-  <div class="keen-slider__slide number-slide1"><img src="000001.jpg" alt=""></div>
-  <div class="keen-slider__slide number-slide2"><img src="000002.jpg" alt=""></div>
-  <div class="keen-slider__slide number-slide3"><img src="000003.jpg" alt=""></div>
-  <div class="keen-slider__slide number-slide4"><img src="000004.jpg" alt=""></div>
-  <div class="keen-slider__slide number-slide5"><img src="000005.jpg" alt=""></div>
-  <div class="keen-slider__slide number-slide6"><img src="000006.jpg" alt=""></div>
+<div class="showcase-container">
+  <div class="showcase-content">
+    <h2 class="showcase-title">ピックアップ作品</h2>
+    <div class="showcase-slider">
+      <div class="keen-slider" #sliderRef>
+        <div class="keen-slider__slide" *ngFor="let slide of slides; let i = index">
+          <div class="slide-content">
+            <div class="slide-image-wrapper">
+              <img [src]="slide.imageUrl" [alt]="slide.title" class="slide-image">
+              <div class="slide-overlay">
+                <h3 class="slide-title">{{slide.title}}</h3>
+                <div class="slide-details">
+                  <span class="slide-price">￥{{slide.price | number}}</span>
+                  <div class="slide-rating">
+                    <span class="stars">★★★★☆</span>
+                    <span> class="rating-count">({{slide.reviewCount}}件)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="slider-arrow slider-arrow--left" (click)="prev()">
+        <span class="arrow-icon">❮</span>
+      </button>
+      <button class="slider-arrow slider-arrow--right" (click)="next()">
+        <span class="arrow-icon">❯</span>
+      </button>
+
+      <div class="dots">
+        <button
+          *ngFor="let dot of dotHelper; let i = index"
+          [class.active]="currentSlide === i"
+          (click)="moveToSlide(i)">
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-<button class="button btn-primary" (click)="slider.next()">次へ</button>
