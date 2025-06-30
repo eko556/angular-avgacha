@@ -25,7 +25,16 @@
 <div class="showcase-container">
   <div class="showcase-content">
     <h2 class="showcase-title">ピックアップ作品</h2>
-    <div class="showcase-slider">
+    
+    <div *ngIf="isLoading" class="loading-container">
+      <p>読み込み中...</p>
+    </div>
+    
+    <div *ngIf="errorMessage" class="error-container">
+      <p>{{ errorMessage }}</p>
+    </div>
+    
+    <div *ngIf="!isLoading && !errorMessage" class="showcase-slider">
       <div class="keen-slider" #sliderRef>
         <div class="keen-slider__slide" *ngFor="let slide of slides; let i = index">
           <div class="slide-content">
@@ -36,8 +45,8 @@
                 <div class="slide-details">
                   <span class="slide-price">￥{{slide.price | number}}</span>
                   <div class="slide-rating">
-                    <span class="stars">★★★★☆</span>
-                    <span> class="rating-count">({{slide.reviewCount}}件)</span>
+                    <span class="stars">{{ getRatingStars(slide.reviewAverage || '0') }}</span>
+                    <span class="rating-count">({{slide.reviewCount}}件)</span>
                   </div>
                 </div>
               </div>

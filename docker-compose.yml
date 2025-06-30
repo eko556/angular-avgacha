@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  litespeed:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # メインアプリケーション用ポート
+      - "7080:7080"  # 管理パネル用ポート
+    volumes:
+      - ./dist:/var/www/vhosts/localhost/html
+      - ./server:/usr/local/lsws/conf/vhosts
+    environment:
+      - TZ=Asia/Tokyo
+    restart: unless-stopped

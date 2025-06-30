@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface GachaResult {
-  title: string;
-  price: number;
-  imageUrl: string;
-  rating: number;
-  reviewCount: number;
-}
+import { ApiService, GachaItem } from '../../services/api.service';
 
 @Component({
   selector: 'app-gacha',
@@ -18,26 +11,37 @@ interface GachaResult {
 })
 export class GachaComponent {
   isSpinning: boolean = false;
-  currentResult: GachaResult | null = null;
+  currentResult: GachaItem | null = null;
+  errorMessage: string = '';
+
+  constructor(private apiService: ApiService) {}
 
   spinGacha() {
     if (this.isSpinning) return;
 
     this.isSpinning = true;
-    // TODO: APIからランダムな作品を取得する処理を実装
-    setTimeout(() => {
-      this.currentResult = {
-        title: "サンプル作品",
-        price: 1980,
-        imageUrl: "assets/sample.jpg",
-        rating: 4,
-        reviewCount: 120
-      };
-      this.isSpinning = false;
-    }, 2000);
+    this.errorMessage = '';
+    
+    this.apiService.getGachaItems().subscribe({
+      next: (items) => {
+        setTimeout(() => {
+          if (items && items.length > 0) {
+            const randomIndex = Math.floor(Math.random() * items.length);
+            this.currentResult = items[randomIndex];
+          }
+          this.isSpinning = false;
+        }, 2000);
+      },
+      error: (error) => {
+        console.error('Gacha API Error:', error);
+        this.errorMessage = 'APIからデータを取得できませんでした';
+        this.isSpinning = false;
+      }
+    });
   }
 
-  getRatingStars(rating: number): string {
-    return "★".repeat(Math.floor(rating)) + "☆".repeat(5 - Math.floor(rating));
+  getRatingStars(rating: string): string {
+    const numRating = parseFloat(rating);
+    return "★".repeat(Math.floor(numRating)) + "☆".repeat(5 - Math.floor(numRating));
   }
 }

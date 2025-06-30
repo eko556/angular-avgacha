@@ -11,25 +11,28 @@
             <img src="gachaimage.png" alt="ガチャカプセル" class="capsule-image">
           </div>
         </div>
-        <button class="gacha-button">
-          <span class="button-text">回す</span>
+        <button class="gacha-button" (click)="spinGacha()" [disabled]="isSpinning">
+          <span class="button-text">{{ isSpinning ? '抽選中...' : '回す' }}</span>
           <span class="button-price">100円</span>
         </button>
       </div>
-      <div class="gacha-result" *ngIf="false">
+      <div class="gacha-result" *ngIf="currentResult">
         <div class="result-card">
-          <img class="result-image" src="" alt="作品画像">
+          <img class="result-image" [src]="currentResult.imageUrl" [alt]="currentResult.title">
           <div class="result-info">
-            <h3 class="result-title">タイトル</h3>
+            <h3 class="result-title">{{ currentResult.title }}</h3>
             <div class="result-details">
-              <span class="result-price">￥1,980</span>
+              <span class="result-price">￥{{ currentResult.price.toLocaleString() }}</span>
               <div class="result-rating">
-                <span class="stars">★★★★☆</span>
-                <span class="rating-count">(120件)</span>
+                <span class="stars">{{ getRatingStars(currentResult.reviewAverage) }}</span>
+                <span class="rating-count">({{ currentResult.reviewCount }}件)</span>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="error-message" *ngIf="errorMessage">
+        <p>{{ errorMessage }}</p>
       </div>
     </div>
   </div>
