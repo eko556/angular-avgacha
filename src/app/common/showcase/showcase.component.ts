@@ -4,17 +4,11 @@ import {
   OnDestroy,
   ViewChild,
   AfterViewInit,
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
-
-interface ShowcaseItem {
-  imageUrl: string;
-  title: string;
-  price: number;
-  rating: number;
-  reviewCount: number;
-}
+import { ApiService, GachaItem } from '../../services/api.service';
 
 @Component({
   selector: 'app-showcase',
@@ -26,53 +20,46 @@ interface ShowcaseItem {
     './showcase.component.scss',
   ],
 })
-export class ShowcaseComponent implements AfterViewInit, OnDestroy {
+export class ShowcaseComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLElement>;
 
   currentSlide: number = 0;
   dotHelper: Array<number> = [];
   slider!: KeenSliderInstance;
+  slides: GachaItem[] = [];
+  isLoading: boolean = true;
+  errorMessage: string = '';
 
-  // サンプルデータ
-  slides: ShowcaseItem[] = [
-    {
-      imageUrl: 'assets/sample1.jpg',
-      title: 'サンプル作品1',
-      price: 1980,
-      rating: 4.5,
-      reviewCount: 120
-    },
-    {
-      imageUrl: 'assets/sample2.jpg',
-      title: 'サンプル作品2',
-      price: 2980,
-      rating: 4.2,
-      reviewCount: 85
-    },
-    {
-      imageUrl: 'assets/sample3.jpg',
-      title: 'サンプル作品3',
-      price: 1580,
-      rating: 4.8,
-      reviewCount: 230
-    },
-    {
-      imageUrl: 'assets/sample4.jpg',
-      title: 'サンプル作品4',
-      price: 2480,
-      rating: 4.3,
-      reviewCount: 156
-    },
-    {
-      imageUrl: 'assets/sample5.jpg',
-      title: 'サンプル作品5',
-      price: 1780,
-      rating: 4.6,
-      reviewCount: 198
-    }
-  ];
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.loadShowcaseItems();
+  }
+
+  loadShowcaseItems() {
+    this.apiService.getAllItems().subscribe({
+      next: (items) => {
+        this.slides = items;
+        this.isLoading = false;
+        setTimeout(() => this.initializeSlider(), 0);
+      },
+      error: (error) => {
+        console.error('Showcase API Error:', error);
+        this.errorMessage = 'データの読み込みに失敗しました';
+        this.isLoading = false;
+      }
+    });
+  }
 
   ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.slides.length > 0) {
+        this.initializeSlider();
+      }
+    }, 0);
+  }
+
+  initializeSlider() {
     this.slider = new KeenSlider(
       this.sliderRef.nativeElement,
       {
@@ -147,5 +134,10 @@ export class ShowcaseComponent implements AfterViewInit, OnDestroy {
 
   moveToSlide(idx: number) {
     this.slider.moveToIdx(idx);
+  }
+
+  getRatingStars(rating: string): string {
+    const numRating = parseFloat(rating);
+    return "★".repeat(Math.floor(numRating)) + "☆".repeat(5 - Math.floor(numRating));
   }
 }
